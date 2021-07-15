@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HorseFormComponent } from './horse-form/horse-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SigneupComponent } from './signeup/signeup.component';
+import { HorseService } from './horse.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,9 @@ import { SigneupComponent } from './signeup/signeup.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

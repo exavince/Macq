@@ -2,7 +2,7 @@ package controllers
 
 import javax.inject._
 import play.api.mvc._
-import repositories.HorseRepository
+import repositories.UserRepository
 import reactivemongo.bson.BSONObjectID
 import play.api.libs.json.{Json, __}
 import scala.util.{Failure, Success}
@@ -12,7 +12,7 @@ import models.User
 import play.api.libs.json.JsValue
 
 @Singleton
-class UserController @Inject()(implicit executionContext: ExecutionContext, val userRepository: userRepository, val controllerComponents: ControllerComponents) extends BaseController {
+class UserController @Inject()(implicit executionContext: ExecutionContext, val userRepository: UserRepository, val controllerComponents: ControllerComponents) extends BaseController {
   
   def findAll():Action[AnyContent] = Action.async { implicit request: Request[AnyContent] =>
     userRepository.findAll().map {
@@ -23,7 +23,7 @@ class UserController @Inject()(implicit executionContext: ExecutionContext, val 
   def findOne(id:String):Action[AnyContent] = Action.async { implicit request: Request[AnyContent] =>
     val objectIdTryResult = BSONObjectID.parse(id)
     objectIdTryResult match {
-      case Success(objectId) => Repository.findOne(objectId).map {
+      case Success(objectId) => userRepository.findOne(objectId).map {
         user => Ok(Json.toJson(user))
       }
       case Failure(_) => Future.successful(BadRequest("Cannot parse the movie id"))

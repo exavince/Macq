@@ -18,7 +18,7 @@ export class TableComponent {
 
   rowData = [];
 
-  constructor(private service:HorseService) { 
+  constructor(private service: HorseService) { 
     this.service.getHorses().subscribe((data: any) => {
       this.rowData = data
       console.log(data)

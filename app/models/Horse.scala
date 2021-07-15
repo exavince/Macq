@@ -14,7 +14,7 @@ case class Horse(
   _updateDate: Option[DateTime],
   name:String,
   colour:String,
-  speed: Int,
+  speed: String,
   breed: String,
 )
 
@@ -29,7 +29,7 @@ object Horse{
         doc.getAs[BSONDateTime]("_updateDate").map(dt => new DateTime(dt.value)),
         doc.getAs[String]("name").get,
         doc.getAs[String]("colour").get,
-        doc.getAs[Int]("speed").get,  
+        doc.getAs[String]("speed").get,  
         doc.getAs[String]("breed").get,
       )
     }

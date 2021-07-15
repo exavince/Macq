@@ -31,7 +31,6 @@ class HorseController @Inject()(implicit executionContext: ExecutionContext, val
   }
 
   def create():Action[JsValue] = Action.async(controllerComponents.parsers.json) { implicit request => {
-
     request.body.validate[Horse].fold(
       _ => Future.successful(BadRequest("Cannot parse request body")),
       horse =>

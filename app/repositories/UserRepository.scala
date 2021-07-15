@@ -12,7 +12,7 @@ import reactivemongo.api.commands.WriteResult
 
 
 @Singleton
-class HorseRepository @Inject()(implicit executionContext: ExecutionContext, reactiveMongoApi: ReactiveMongoApi) {
+class UserRepository @Inject()(implicit executionContext: ExecutionContext, reactiveMongoApi: ReactiveMongoApi) {
 
   def collection: Future[BSONCollection] = reactiveMongoApi.database.map(db => db.collection("users"))
 
@@ -30,13 +30,13 @@ class HorseRepository @Inject()(implicit executionContext: ExecutionContext, rea
 
   def create(user: User): Future[WriteResult] = {
     collection.flatMap(_.insert(ordered = false)
-      .one(horse.copy(_creationDate = Some(new DateTime()), _updateDate = Some(new DateTime()))))
+      .one(user.copy(_creationDate = Some(new DateTime()), _updateDate = Some(new DateTime()))))
   }
 
   def update(id: BSONObjectID, user: User):Future[WriteResult] = {
     collection.flatMap(
       _.update(ordered = false).one(BSONDocument("_id" -> id),
-        horse.copy(
+        user.copy(
           _updateDate = Some(new DateTime())))
     )
   }

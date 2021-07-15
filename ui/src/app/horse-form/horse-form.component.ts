@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, NgForm } from '@angular/forms';
 
 
 @Component({
@@ -6,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './horse-form.component.html',
   styleUrls: ['./horse-form.component.scss']
 })
-export class HorseFormComponent implements OnInit {
+export class HorseFormComponent {
   
   colors = [
     { id: 1, name:'Red' },
@@ -25,25 +27,14 @@ export class HorseFormComponent implements OnInit {
   colour:any;
   image:any;
 
-  constructor() { }
+  constructor(private http:HttpClient) { }
 
-  submit(f:any) {
+  submit(f:NgForm) {
     console.log(f.value);
-  }
-
-
-  Hobbies: string[] = [
-    'Acrobatics',
-    'Acting',
-    'Animation',
-    'Astronomy',
-    'Baking'
-  ];
-
-  ngOnInit(): void {
-  }
-
-  onSubmit(form:any) {
-    console.log(form.value)
+    fetch("/api/horses", {
+      method: 'POST',
+      headers:{ 'Content-Type': 'application/json' },
+      body: JSON.stringify(f.value)
+    })
   }
 }

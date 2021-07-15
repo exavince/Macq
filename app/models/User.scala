@@ -21,7 +21,7 @@ object User{
 
   implicit object UserBSONReader extends BSONDocumentReader[User] {
     def read(doc: BSONDocument): User = {
-      Horse(
+      User(
         doc.getAs[BSONObjectID]("_id"),
         doc.getAs[BSONDateTime]("_creationDate").map(dt => new DateTime(dt.value)),
         doc.getAs[BSONDateTime]("_updateDate").map(dt => new DateTime(dt.value)),
