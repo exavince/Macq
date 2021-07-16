@@ -7,11 +7,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavComponent } from './nav/nav.component';
 import { TableComponent } from './table/table.component';
 import { AgGridModule } from 'ag-grid-angular';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HorseFormComponent } from './horse-form/horse-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SigneupComponent } from './signeup/signeup.component';
 import { HorseService } from './horse.service';
+import { LoginComponent } from './login/login.component';
+import { BasicAuthInterceptor } from './_helpers/basic-auth.interceptor';
+import { ErrorInterceptor } from './_helpers/error.interceptor';
+import { fakeBackendProvider } from './_helpers/fake-backend';
+
 
 @NgModule({
   declarations: [
@@ -19,7 +23,7 @@ import { HorseService } from './horse.service';
     NavComponent,
     TableComponent,
     HorseFormComponent,
-    SigneupComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,10 +32,13 @@ import { HorseService } from './horse.service';
     AgGridModule.withComponents([]),
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
-    
+    HorseService,
+    { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })

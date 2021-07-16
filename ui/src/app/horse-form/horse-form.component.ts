@@ -35,6 +35,6 @@ export class HorseFormComponent {
       method: 'POST',
       headers:{ 'Content-Type': 'application/json' },
       body: JSON.stringify(f.value)
-    })
+    }).then()
   }
 }
